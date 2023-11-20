@@ -41,7 +41,7 @@ android {
 dependencies {
     implementation("androidx.media3:media3-exoplayer:1.2.0")
     val nav_version = "2.7.5"
-    implementation("com.google.android.exoplayer:exoplayer:2.18.1")
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
     implementation("com.cleveroad:play-widget:1.0.0")
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
