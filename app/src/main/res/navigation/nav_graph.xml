@@ -20,27 +20,25 @@
         android:id="@+id/viewPagerFragment"
         android:name="com.hadis.mymusicapplication.ViewPagerFragment"
         android:label="fragment_view_pager"
-        tools:layout="@layout/fragment_view_pager" />
+        tools:layout="@layout/fragment_view_pager" >
+
+        <action
+            android:id="@+id/viewPagerToCurrentPlayingFragment"
+            app:destination="@+id/currentPlayingFragment"
+            />
+    </fragment>
     <fragment
         android:id="@+id/allMusicFragment"
         android:name="com.hadis.mymusicapplication.AllMusicFragment"
         android:label="fragment_all_music"
-        tools:layout="@layout/fragment_all_music" >
-        <action
-            android:id="@+id/allMusicFragmentToCurrentPlaying"
-            app:destination="@+id/currentPlayingFragment"
-            />
-    </fragment>
+        tools:layout="@layout/fragment_all_music" />
+
     <fragment
         android:id="@+id/favoriteSongsFragment"
         android:name="com.hadis.mymusicapplication.FavoriteSongsFragment"
         android:label="fragment_favorite_songs"
-        tools:layout="@layout/fragment_favorite_songs">
-        <action
-            android:id="@+id/favoriteSongsFragmentToCurrentPlaying"
-            app:destination="@+id/currentPlayingFragment"
-            />
-    </fragment>
+        tools:layout="@layout/fragment_favorite_songs"/>
+
     <fragment
         android:id="@+id/currentPlayingFragment"
         android:name="com.hadis.mymusicapplication.currentPlayingFragment"
