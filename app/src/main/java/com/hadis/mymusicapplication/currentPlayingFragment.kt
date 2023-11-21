@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.cleveroad.play_widget.PlayLayout
+import com.hadis.mymusicapplication.allMusicList
 import com.hadis.mymusicapplication.currentMusic
 import com.hadis.mymusicapplication.databinding.FragmentCurrentPlayingBinding
 import com.hadis.mymusicapplication.playMusic
 import com.hadis.mymusicapplication.playerList
 import kotlinx.coroutines.launch
+import java.lang.IndexOutOfBoundsException
 import java.util.Timer
 import java.util.TimerTask
 
@@ -41,9 +43,11 @@ class currentPlayingFragment : Fragment() {
             }
 
             override fun onSkipPreviousClicked() {
+               changeMusicLogic(false)
             }
 
             override fun onSkipNextClicked() {
+             changeMusicLogic(true)
             }
 
             override fun onRepeatClicked() {
@@ -91,6 +95,20 @@ class currentPlayingFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        playerList.last().stop()
         binding = null
+    }
+
+    private fun changeMusicLogic(isNextClicked : Boolean) {
+        try {
+
+            val index = if (isNextClicked) 1 else -1
+            var newMusicIndex =
+                allMusicList.indexOf(allMusicList.find { it.title == currentMusic!!.title }) + index
+            currentMusic = allMusicList[newMusicIndex]
+            playerList.last().stop()
+            playLayout.setImageURI(currentMusic!!.coverArtUri)
+            playMusic(requireContext(), currentMusic!!.filePath)
+        } catch (e: IndexOutOfBoundsException) { }
     }
 }
