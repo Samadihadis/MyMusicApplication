@@ -40,7 +40,7 @@ fun getAllAudioFromDevice(context: Context) {
     }
 }
 
-fun platMusic(context: Context , filePath : String) {
+fun playMusic(context: Context , filePath : String) {
     val player = ExoPlayer.Builder(context).build()
     val mediaItem : MediaItem = MediaItem.fromUri(Uri.parse(filePath))
     player.addMediaItem(mediaItem)
@@ -52,4 +52,5 @@ fun platMusic(context: Context , filePath : String) {
                 player.release()
         }
     })
+    playerList.add(player)
 }
