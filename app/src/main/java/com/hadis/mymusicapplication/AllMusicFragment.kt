@@ -58,10 +58,19 @@ class AllMusicFragment : Fragment() {
         val recycleView = binding!!.recycleViewAllSongs
         val musicList = MusicAdaptor(allMusicList , requireContext() )
         recycleView.adapter = musicList
+        mainList.clear()
+        mainList.addAll(allMusicList)
         recycleView.layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(requireContext() , DividerItemDecoration.VERTICAL)
         recycleView.addItemDecoration(dividerItemDecoration)
     }
+
+    override fun onResume() {
+        super.onResume()
+        mainList.clear()
+        mainList.addAll(allMusicList)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

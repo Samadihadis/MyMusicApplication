@@ -4,6 +4,7 @@
 
         <item name="colorPrimary">@color/black</item>
         <item name="android:statusBarColor">@color/black</item>
+        <item name="android:fontFamily">@font/yekanbakh</item>
     </style>
 
     <style name="Theme.MyMusicApplication" parent="Base.Theme.MyMusicApplication" />
