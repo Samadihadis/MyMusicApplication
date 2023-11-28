@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrand"
-    tools:context=".currentPlayingFragment">
+    android:background="@drawable/backgrand">
 
     <com.cleveroad.play_widget.PlayLayout
         android:id="@+id/playLayout"
@@ -16,6 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:pw_image_src="@drawable/pw_image" />
+
+    <ImageView
+        android:id="@+id/favoriteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/first"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

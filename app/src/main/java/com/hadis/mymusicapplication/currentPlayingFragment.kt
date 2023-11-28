@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.cleveroad.play_widget.PlayLayout
+import com.hadis.mymusicapplication.R
 import com.hadis.mymusicapplication.allMusicList
 import com.hadis.mymusicapplication.currentMusic
 import com.hadis.mymusicapplication.databinding.FragmentCurrentPlayingBinding
@@ -33,6 +34,16 @@ class currentPlayingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding!!.favoriteImageView.setOnClickListener {
+            if(currentMusic!!.isFavorite){
+                binding!!.favoriteImageView.setImageResource(R.drawable.first)
+                allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = false
+            }
+            else{
+                binding!!.favoriteImageView.setImageResource(R.drawable.second)
+                allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = true
+            }
+        }
         playLayout = binding!!.playLayout
         playMusic(requireContext(), currentMusic!!.filePath)
         startTimer()

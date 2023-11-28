@@ -34,7 +34,7 @@ fun getAllAudioFromDevice(context: Context) {
             val pathUri = Uri
                 .parse("context://media/external/audio/albumart")
             val albumArtUri = ContentUris.withAppendedId(pathUri, cursor.getLong(4))
-            allMusicList.add(Music(title, artist, album, path, albumArtUri))
+            allMusicList.add(Music(title, artist, album, path, albumArtUri ,false))
         }
         cursor.close()
     }
