@@ -11,6 +11,7 @@ import com.hadis.mymusicapplication.databinding.FragmentAllMusicBinding
 import com.karumi.dexter.Dexter
 import android.Manifest
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
@@ -57,14 +58,18 @@ class AllMusicFragment : Fragment() {
 
     private fun initialRecycleView(){
         getAllAudioFromDevice(requireContext())
+
         val recycleView = binding!!.recycleViewAllSongs
-        val musicList = MusicAdaptor(allMusicList , requireContext() )
-        recycleView.adapter = musicList
-        mainList.clear()
-        mainList.addAll(allMusicList)
-        recycleView.layoutManager = LinearLayoutManager(requireContext())
+
+        recycleView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         val dividerItemDecoration = DividerItemDecoration(requireContext() , DividerItemDecoration.VERTICAL)
         recycleView.addItemDecoration(dividerItemDecoration)
+
+        val musicAdaptor = MusicAdaptor(allMusicList , requireContext() )
+        recycleView.adapter = musicAdaptor
+
+        mainList.clear()
+        mainList.addAll(allMusicList)
     }
 
     override fun onResume() {
