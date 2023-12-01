@@ -39,6 +39,11 @@ class MusicAdaptor(var musicList: List<Music>, private var context: Context) :
         return ViewHolder(view)
     }
 
+    fun filterList (list : MutableList<Music>){
+        musicList = list
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return musicList.size
     }

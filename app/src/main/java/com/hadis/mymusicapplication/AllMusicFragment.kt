@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hadis.mymusicapplication.databinding.FragmentAllMusicBinding
 import com.karumi.dexter.Dexter
 import android.Manifest
+import android.view.Menu
+import android.view.MenuInflater
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.karumi.dexter.PermissionToken
@@ -28,6 +31,7 @@ class AllMusicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAllMusicBinding.inflate(inflater, container, false)
+       setHasOptionsMenu(true)
         return binding!!.root
     }
 
@@ -45,7 +49,8 @@ class AllMusicFragment : Fragment() {
                 }
 
                 override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                    Toast.makeText(requireContext(), "Permission Denied!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Permission Denied!", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -57,21 +62,50 @@ class AllMusicFragment : Fragment() {
             }).check()
     }
 
-    private fun initialRecycleView(){
+    private fun initialRecycleView() {
         getAllAudioFromDevice(requireContext())
 
         val recycleView = binding!!.recycleViewAllSongs
 
-        recycleView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        val dividerItemDecoration = DividerItemDecoration(requireContext() , DividerItemDecoration.VERTICAL)
+        recycleView.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        val dividerItemDecoration =
+            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         recycleView.addItemDecoration(dividerItemDecoration)
 
-        val musicAdaptor = MusicAdaptor(allMusicList , requireContext() )
+        val musicAdaptor = MusicAdaptor(allMusicList, requireContext())
         recycleView.adapter = musicAdaptor
 
         mainList.clear()
         mainList.addAll(allMusicList)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search_menu, menu)
+        val menuItem = menu.findItem(R.id.searchItem)
+        val searchItem = menuItem.actionView as SearchView
+        searchItem.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filter(newText!!)
+                return false
+            }
+
+        })
+    }
+
+    private fun filter(input: String) {
+            val temList = mutableListOf<Music>()
+            for (music in mainList) {
+                if (music.title.lowercase().contains(input.lowercase()))
+                    temList.add(music)
+            }
+            ((binding!!.recycleViewAllSongs.adapter) as MusicAdaptor).filterList(temList)
+        }
 
     override fun onResume() {
         super.onResume()
