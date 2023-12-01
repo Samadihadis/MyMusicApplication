@@ -9,11 +9,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hadis.mymusicapplication.databinding.FragmentFavoriteSongsBinding
+import kotlinx.coroutines.launch
 
-var menuItemInFavoriteSongsFragment : MenuItem?= null
+var menuItemInFavoriteSongsFragment: MenuItem? = null
+
 class FavoriteSongsFragment : Fragment() {
     private var binding: FragmentFavoriteSongsBinding? = null
 
@@ -36,6 +39,7 @@ class FavoriteSongsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initialRecycleView()
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.search_menu, menu)
@@ -60,24 +64,41 @@ class FavoriteSongsFragment : Fragment() {
             if (music.title.lowercase().contains(input.lowercase()))
                 temList.add(music)
         }
-        ((binding!!.recycleViewFavoriteSongs.adapter) as MusicAdaptor).filterList(temList)
+        ((binding!!.recycleViewFavoriteSongs.adapter) as? MusicAdaptor)?.filterList(temList)
     }
 
 
     override fun onResume() {
         super.onResume()
-        initialRecycleView()
+        mainList.clear()
+        mainList.addAll(favoriteSongs)
     }
 
     private fun initialRecycleView() {
-        val recycleView = binding!!.recycleViewFavoriteSongs
-        val musicList = MusicAdaptor(favoriteSongs, requireContext())
-        mainList.clear()
-        mainList.addAll(favoriteSongs)
-        recycleView.adapter = musicList
-        recycleView.layoutManager = LinearLayoutManager(requireContext())
-        val dividerItemDecoration =
-            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        recycleView.addItemDecoration(dividerItemDecoration)
+        favoriteSongs.clear()
+        lifecycleScope.launch {
+            for (music in allMusicList) {
+                val key = "${music.singerName}#${music.title}"
+                if (key == readFromDataStore(requireContext() ,key )){
+                    favoriteSongs.add(music)
+                    music.isFavorite = true
+                }
+            }
+
+
+            val recycleView = binding!!.recycleViewFavoriteSongs
+
+            recycleView.layoutManager = LinearLayoutManager(requireContext())
+            val dividerItemDecoration =
+                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            recycleView.addItemDecoration(dividerItemDecoration)
+
+            val musicAdaptor = MusicAdaptor(favoriteSongs, requireContext())
+
+            recycleView.adapter = musicAdaptor
+
+            mainList.clear()
+            mainList.addAll(favoriteSongs)
+        }
     }
 }

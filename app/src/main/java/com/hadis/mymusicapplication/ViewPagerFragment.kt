@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.hadis.mymusicapplication.databinding.FragmentViewPagerBinding
+
+val Context.datastore by preferencesDataStore("favoriteMusic")
 
 class ViewPagerFragment : Fragment() {
     private var binding: FragmentViewPagerBinding? = null

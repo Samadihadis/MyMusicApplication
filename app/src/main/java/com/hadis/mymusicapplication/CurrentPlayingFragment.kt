@@ -34,14 +34,25 @@ class CurrentPlayingFragment : Fragment() {
         binding!!.titleInCurrentSong.text = currentMusic!!.title
         binding!!.artistInCurrentSong.text = currentMusic!!.singerName
         binding!!.favoriteImageView.setOnClickListener {
+
+            val keyAndValue = "${currentMusic!!.singerName}#${currentMusic!!.title}"
+
             if (currentMusic!!.isFavorite) {
                 binding!!.favoriteImageView.setImageResource(R.drawable.first)
-                allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = false
-                favoriteSongs.remove(currentMusic)
+                lifecycleScope.launch {
+                    allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = false
+                    favoriteSongs.remove(currentMusic)
+                    deleteFromDataStore(requireContext() ,keyAndValue )
+                    mainList.clear()
+                    mainList.addAll(favoriteSongs)
+                }
             } else {
                 binding!!.favoriteImageView.setImageResource(R.drawable.second)
                 allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = true
                 favoriteSongs.add(currentMusic!!)
+                lifecycleScope.launch {
+                    writeToDataStore(requireContext() , keyAndValue , keyAndValue)
+                }
             }
         }
         playLayout = binding!!.playLayout
@@ -98,7 +109,10 @@ class CurrentPlayingFragment : Fragment() {
         timer!!.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 lifecycleScope.launch {
-                    playLayout.setProgress(playerList.last().currentPosition.toFloat() / playerList.last().duration)
+                    val currentProcess = playerList.last().currentPosition.toFloat() / playerList.last().duration
+                    playLayout.setProgress(currentProcess)
+                    if (currentProcess>= 1 )
+                        changeMusicLogic(true)
                 }
             }
         }, 0, 1000)
@@ -129,6 +143,10 @@ class CurrentPlayingFragment : Fragment() {
             playMusic(requireContext(), currentMusic!!.filePath)
             if (!playLayout.isOpen) {
                 playLayout.startRevealAnimation()
+                if (currentMusic!!.isFavorite)
+                    binding!!.favoriteImageView.setImageResource(R.drawable.second)
+                else
+                    binding!!.favoriteImageView.setImageResource(R.drawable.first)
             }
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()

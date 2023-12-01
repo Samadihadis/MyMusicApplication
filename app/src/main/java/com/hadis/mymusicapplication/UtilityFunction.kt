@@ -5,9 +5,12 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import kotlinx.coroutines.flow.first
 
 
 fun getAllAudioFromDevice(context: Context) {
@@ -35,23 +38,44 @@ fun getAllAudioFromDevice(context: Context) {
             val pathUri = Uri
                 .parse("content://media/external/audio/albumart")
             val albumArtUri = ContentUris.withAppendedId(pathUri, cursor.getLong(4))
-            allMusicList.add(Music(title, artist, album, path, albumArtUri ,false))
+            allMusicList.add(Music(title, artist, album, path, albumArtUri, false))
         }
         cursor.close()
     }
 }
 
-fun playMusic(context: Context , filePath : String) {
+fun playMusic(context: Context, filePath: String) {
     val player = ExoPlayer.Builder(context).build()
-    val mediaItem : MediaItem = MediaItem.fromUri(Uri.parse(filePath))
+    val mediaItem: MediaItem = MediaItem.fromUri(Uri.parse(filePath))
     player.addMediaItem(mediaItem)
     player.prepare()
     player.play()
-    player.addListener(object  : Player.Listener{
+    player.addListener(object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             if (playbackState == Player.STATE_ENDED)
                 player.release()
         }
     })
     playerList.add(player)
+
+}
+
+suspend fun writeToDataStore(context: Context, key: String, value: String) {
+    val preferencesKey = stringPreferencesKey(key)
+    context.datastore.edit {
+        it[preferencesKey] = value
+    }
+}
+
+suspend fun deleteFromDataStore(context: Context, key: String) {
+    val preferencesKey = stringPreferencesKey(key)
+    context.datastore.edit {
+        it[preferencesKey] = ""
+    }
+}
+
+suspend fun readFromDataStore(context: Context, key: String):String? {
+    val preferencesKey = stringPreferencesKey(key)
+    val preferences = context.datastore.data.first()
+    return  preferences[preferencesKey]
 }
