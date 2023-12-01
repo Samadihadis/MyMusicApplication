@@ -1,4 +1,4 @@
-package com.hadis.mymusicapplication11
+package com.hadis.mymusicapplication
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,27 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.cleveroad.play_widget.PlayLayout
-import com.hadis.mymusicapplication.MusicAdaptor
-import com.hadis.mymusicapplication.R
-import com.hadis.mymusicapplication.allMusicList
-import com.hadis.mymusicapplication.currentMusic
 import com.hadis.mymusicapplication.databinding.FragmentCurrentPlayingBinding
-import com.hadis.mymusicapplication.favoriteSongs
-import com.hadis.mymusicapplication.getAllAudioFromDevice
-import com.hadis.mymusicapplication.mainList
-import com.hadis.mymusicapplication.playMusic
-import com.hadis.mymusicapplication.playerList
 import kotlinx.coroutines.launch
 import java.lang.IndexOutOfBoundsException
 import java.util.Timer
 import java.util.TimerTask
 
 
-class currentPlayingFragment : Fragment() {
-    var timer: Timer? = null
+class CurrentPlayingFragment : Fragment() {
+
+    private var timer: Timer? = null
     private lateinit var playLayout: PlayLayout
     private var binding: FragmentCurrentPlayingBinding? = null
 

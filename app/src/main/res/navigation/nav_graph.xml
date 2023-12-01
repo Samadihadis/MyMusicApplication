@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/currentPlayingFragment"
-        android:name="com.hadis.mymusicapplication.currentPlayingFragment"
+        android:name="com.hadis.mymusicapplication.CurrentPlayingFragment"
         android:label="fragment_current_playing"
         tools:layout="@layout/fragment_current_playing" />
 </navigation>
