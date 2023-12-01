@@ -27,8 +27,16 @@ class MusicAdaptor(var musicList: List<Music>, private var context: Context) :
                 singerName = findViewById(R.id.artistTextView)
                 image = findViewById(R.id.coverArtImageView)
             }
-            view.setOnClickListener{
+            view.setOnClickListener {
                 currentMusic = musicList[position]
+                if (menuItemInFavoriteSongsFragment!= null){
+                    menuItemInFavoriteSongsFragment!!.collapseActionView()
+                    menuItemInFavoriteSongsFragment!!.isVisible = false
+                }
+                if (menuItemAllInMusicFragment!= null){
+                    menuItemAllInMusicFragment!!.collapseActionView()
+                    menuItemAllInMusicFragment!!.isVisible = false
+                }
                 Navigation.findNavController(view).navigate(R.id.viewPagerToCurrentPlayingFragment)
             }
         }
@@ -39,7 +47,7 @@ class MusicAdaptor(var musicList: List<Music>, private var context: Context) :
         return ViewHolder(view)
     }
 
-    fun filterList (list : MutableList<Music>){
+    fun filterList(list: MutableList<Music>) {
         musicList = list
         notifyDataSetChanged()
     }

@@ -5,14 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hadis.mymusicapplication.databinding.FragmentFavoriteSongsBinding
 
-
+var menuItemInFavoriteSongsFragment : MenuItem?= null
 class FavoriteSongsFragment : Fragment() {
     private var binding: FragmentFavoriteSongsBinding? = null
 
@@ -38,8 +39,8 @@ class FavoriteSongsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.search_menu, menu)
-        val menuItem = menu.findItem(R.id.searchItem)
-        val searchItem = menuItem.actionView as SearchView
+        menuItemInFavoriteSongsFragment = menu.findItem(R.id.searchItem)
+        val searchItem = menuItemInFavoriteSongsFragment!!.actionView as SearchView
         searchItem.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false

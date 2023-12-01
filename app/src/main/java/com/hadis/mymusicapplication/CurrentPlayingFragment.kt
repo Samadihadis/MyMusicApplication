@@ -31,6 +31,8 @@ class CurrentPlayingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (currentMusic!!.isFavorite)
             binding!!.favoriteImageView.setImageResource(R.drawable.second)
+        binding!!.titleInCurrentSong.text = currentMusic!!.title
+        binding!!.artistInCurrentSong.text = currentMusic!!.singerName
         binding!!.favoriteImageView.setOnClickListener {
             if (currentMusic!!.isFavorite) {
                 binding!!.favoriteImageView.setImageResource(R.drawable.first)
@@ -122,6 +124,8 @@ class CurrentPlayingFragment : Fragment() {
             currentMusic = allMusicList[newMusicIndex]
             playerList.last().stop()
             playLayout.setImageURI(currentMusic!!.coverArtUri)
+            binding!!.titleInCurrentSong.text = currentMusic!!.title
+            binding!!.artistInCurrentSong.text = currentMusic!!.singerName
             playMusic(requireContext(), currentMusic!!.filePath)
             if (!playLayout.isOpen) {
                 playLayout.startRevealAnimation()

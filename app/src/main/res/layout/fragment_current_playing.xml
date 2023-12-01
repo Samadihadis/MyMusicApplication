@@ -26,6 +26,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/first"
         />
-
+<TextView
+    android:id="@+id/titleInCurrentSong"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/artistInCurrentSong"
+    android:textColor="@color/white"
+    android:textSize="24sp"
+    android:text="Title"
+    />
+    <TextView
+        android:id="@+id/artistInCurrentSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/titleInCurrentSong"
+        app:layout_constraintEnd_toEndOf="@id/titleInCurrentSong"
+        app:layout_constraintTop_toBottomOf="@+id/titleInCurrentSong"
+        app:layout_constraintBottom_toTopOf="@+id/playLayout"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="Artist Name"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

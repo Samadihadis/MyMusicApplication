@@ -12,8 +12,9 @@ import com.karumi.dexter.Dexter
 import android.Manifest
 import android.view.Menu
 import android.view.MenuInflater
-import android.widget.SearchView
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -21,7 +22,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 
-
+var menuItemAllInMusicFragment : MenuItem ?= null
 class AllMusicFragment : Fragment() {
 
     private var binding: FragmentAllMusicBinding? = null
@@ -83,8 +84,8 @@ class AllMusicFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.search_menu, menu)
-        val menuItem = menu.findItem(R.id.searchItem)
-        val searchItem = menuItem.actionView as SearchView
+        menuItemAllInMusicFragment = menu.findItem(R.id.searchItem)
+        val searchItem = menuItemAllInMusicFragment!!.actionView as SearchView
         searchItem.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
