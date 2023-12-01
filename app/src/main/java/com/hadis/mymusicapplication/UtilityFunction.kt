@@ -11,6 +11,7 @@ import androidx.media3.exoplayer.ExoPlayer
 
 
 fun getAllAudioFromDevice(context: Context) {
+    allMusicList.clear()
     val uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
         MediaStore.Audio.AudioColumns.DATA,
