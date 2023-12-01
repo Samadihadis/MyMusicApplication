@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hadis.mymusicapplication.databinding.FragmentAllMusicBinding
 import com.karumi.dexter.Dexter
 import android.Manifest
+import android.widget.Toast
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
@@ -35,13 +36,14 @@ class AllMusicFragment : Fragment() {
 
     private fun getPermission() {
         Dexter.withContext(requireContext())
-            .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            .withPermission(Manifest.permission.READ_MEDIA_AUDIO)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse) {
                     initialRecycleView()
                 }
 
                 override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    Toast.makeText(requireContext(), "Permission Denied!", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
