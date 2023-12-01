@@ -13,7 +13,6 @@ import java.lang.IndexOutOfBoundsException
 import java.util.Timer
 import java.util.TimerTask
 
-
 class CurrentPlayingFragment : Fragment() {
 
     private var timer: Timer? = null
@@ -33,12 +32,11 @@ class CurrentPlayingFragment : Fragment() {
         if (currentMusic!!.isFavorite)
             binding!!.favoriteImageView.setImageResource(R.drawable.second)
         binding!!.favoriteImageView.setOnClickListener {
-            if(currentMusic!!.isFavorite){
+            if (currentMusic!!.isFavorite) {
                 binding!!.favoriteImageView.setImageResource(R.drawable.first)
                 allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = false
                 favoriteSongs.remove(currentMusic)
-            }
-            else{
+            } else {
                 binding!!.favoriteImageView.setImageResource(R.drawable.second)
                 allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = true
                 favoriteSongs.add(currentMusic!!)
@@ -54,11 +52,11 @@ class CurrentPlayingFragment : Fragment() {
             }
 
             override fun onSkipPreviousClicked() {
-               changeMusicLogic(false)
+                changeMusicLogic(false)
             }
 
             override fun onSkipNextClicked() {
-             changeMusicLogic(true)
+                changeMusicLogic(true)
             }
 
             override fun onRepeatClicked() {
@@ -116,9 +114,8 @@ class CurrentPlayingFragment : Fragment() {
         binding = null
     }
 
-    private fun changeMusicLogic(isNextClicked : Boolean) {
+    private fun changeMusicLogic(isNextClicked: Boolean) {
         try {
-
             val index = if (isNextClicked) 1 else -1
             var newMusicIndex =
                 mainList.indexOf(allMusicList.find { it.title == currentMusic!!.title }) + index
@@ -129,6 +126,8 @@ class CurrentPlayingFragment : Fragment() {
             if (!playLayout.isOpen) {
                 playLayout.startRevealAnimation()
             }
-        } catch (e: IndexOutOfBoundsException) { }
+        } catch (e: IndexOutOfBoundsException) {
+            e.printStackTrace()
+        }
     }
 }

@@ -12,7 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-class MusicAdaptor(var musicList: List<Music>, var context: Context) :
+
+class MusicAdaptor(var musicList: List<Music>, private var context: Context) :
     RecyclerView.Adapter<MusicAdaptor.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -46,9 +47,11 @@ class MusicAdaptor(var musicList: List<Music>, var context: Context) :
         holder.apply {
             title.text = musicList[position].title
             singerName.text = musicList[position].singerName
-            Glide.with(context).load(musicList[position].coverArtUri)
-                .transform(CenterCrop(), RoundedCorners(25)).into(image)
+            Glide.with(context)
+                .load(musicList[position].coverArtUri)
+                .error(R.drawable.images)
+                .transform(CenterCrop(), RoundedCorners(40))
+                .into(image)
         }
-
     }
 }

@@ -20,6 +20,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 
 
 class AllMusicFragment : Fragment() {
+
     private var binding: FragmentAllMusicBinding? = null
 
     override fun onCreateView(
