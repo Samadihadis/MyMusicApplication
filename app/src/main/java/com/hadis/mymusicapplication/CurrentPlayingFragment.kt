@@ -43,8 +43,6 @@ class CurrentPlayingFragment : Fragment() {
                     allMusicList.find { it.title == currentMusic!!.title }!!.isFavorite = false
                     favoriteSongs.remove(currentMusic)
                     deleteFromDataStore(requireContext() ,keyAndValue )
-                    mainList.clear()
-                    mainList.addAll(favoriteSongs)
                 }
             } else {
                 binding!!.favoriteImageView.setImageResource(R.drawable.second)

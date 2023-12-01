@@ -42,6 +42,8 @@ class FavoriteSongsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        mainList.clear()
+        mainList.addAll(favoriteSongs)
         inflater.inflate(R.menu.search_menu, menu)
         menuItemInFavoriteSongsFragment = menu.findItem(R.id.searchItem)
         val searchItem = menuItemInFavoriteSongsFragment!!.actionView as SearchView
